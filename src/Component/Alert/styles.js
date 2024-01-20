@@ -11,4 +11,7 @@ export const styles = StyleSheet.create({
     fontSize: normalize(18),
     fontFamily: `${Font.NAME}-Medium`,
   },
+  button: {
+    width: '100%',
+  },
 });

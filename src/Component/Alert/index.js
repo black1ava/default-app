@@ -27,7 +27,7 @@ function Alert({title, onClose}) {
         width={normalize(48)}
       />
       {renderTitle}
-      <Button title="Okay" onPress={onClose} />
+      <Button style={styles.button} title="Okay" onPress={onClose} />
     </View>
   );
 }

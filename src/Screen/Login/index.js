@@ -21,6 +21,8 @@ function Login() {
   const [phone, setPhone] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginAlert, setLoginAlert] = useState(false);
+  const [somethingWentWrongAlert, setSomethingWentWrongAlert] = useState(false);
+  const [confirmation, setConfirmation] = useState(null);
 
   const handlePhoneChange = useCallback(function (value) {
     setPhone(value);
@@ -42,9 +44,17 @@ function Login() {
     });
   }, []);
 
+  const handleSomethingWentWrongAlertToggle = useCallback(function () {
+    setSomethingWentWrongAlert(function (state) {
+      return !state;
+    });
+  }, []);
+
   const handleSignInWithPhoneNumber = useCallback(
-    function () {
-      if (phoneNumber === '') {
+    async function () {
+      if (phone === '') {
+        handleLoginAlertToggle();
+        return;
       }
 
       const phoneNumber = phone[0] === '0' ? phone.substring(1) : phone;
@@ -53,14 +63,28 @@ function Login() {
       handleLoginLoadingToggle();
 
       try {
+        const confirmation = await dispatch(
+          AuthActions.phoneLogin(formattedPhoneNumber),
+        );
+
+        setConfirmation(confirmation);
       } catch (error) {
+        handleSomethingWentWrongAlertToggle();
         console.error(error);
       } finally {
         handleLoginLoadingToggle();
       }
     },
-    [phone, handleLoginLoadingToggle],
+    [
+      phone,
+      handleLoginLoadingToggle,
+      handleLoginAlertToggle,
+      handleSomethingWentWrongAlertToggle,
+      dispatch,
+    ],
   );
+
+  console.log(confirmation);
 
   return (
     <TouchableWithoutFeedback onPress={handleKeyboardDismiss}>
@@ -82,6 +106,12 @@ function Login() {
           <Alert
             title="Phone number is required"
             onClose={handleLoginAlertToggle}
+          />
+        </Modal>
+        <Modal visible={somethingWentWrongAlert}>
+          <Alert
+            title="Something went wrong, please try again later"
+            onClose={handleSomethingWentWrongAlertToggle}
           />
         </Modal>
       </KeyboardAvoidingView>
