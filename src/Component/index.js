@@ -5,6 +5,7 @@ import LanguageModal from './LanguageModal';
 import LanguageItem from './LanguageItem';
 import Button from './Button';
 import PhoneInput from './PhoneInput';
+import Alert from './Alert';
 
 export {
   Modal,
@@ -14,4 +15,5 @@ export {
   LanguageItem,
   Button,
   PhoneInput,
+  Alert,
 };
