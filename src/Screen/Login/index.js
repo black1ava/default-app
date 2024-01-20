@@ -44,6 +44,9 @@ function Login() {
 
   const handleSignInWithPhoneNumber = useCallback(
     function () {
+      if (phoneNumber === '') {
+      }
+
       const phoneNumber = phone[0] === '0' ? phone.substring(1) : phone;
       const formattedPhoneNumber = `+855${phoneNumber}`;
 
