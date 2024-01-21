@@ -1,6 +1,8 @@
 export class Screen {
   static LOGIN = 'LOGIN';
   static HOME = 'HOME';
+  static HOME_STACK = 'HOME_STACK';
+  static HOME_TAB = 'HOME_TAB';
 }
 
 export class Color {

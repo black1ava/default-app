@@ -1,12 +1,14 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import normalize from 'react-native-normalize';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import AutoHeightFastImage from '../AutoHeightFastImage';
 import Modal from '../Modal';
 import LanguageModal from '../LanguageModal';
 import {useLanguage} from '../../Hooks';
 import {LANGUAGE} from '../../Constant';
+import {styles} from './styles';
 
 function LanguageHeader() {
   const [showLanguageModal, setShowLanguageModal] = useState(false);
@@ -29,8 +31,11 @@ function LanguageHeader() {
 
   return (
     <React.Fragment>
-      <TouchableOpacity onPress={handleShowLanguageModalToggle}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={handleShowLanguageModalToggle}>
         <AutoHeightFastImage source={image} width={normalize(32, 'width')} />
+        <AntDesign name="caretdown" size={normalize(14)} />
       </TouchableOpacity>
       <Modal
         visible={showLanguageModal}

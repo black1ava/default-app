@@ -11,6 +11,7 @@ export const translation = new LocalizedStrings({
     'Something went wrong, please try again later':
       'Something went wrong, please try again later',
     Okay: 'Okay',
+    Home: 'Home',
   },
   [LANGUAGE.KH]: {
     Login: 'ចូល',
@@ -21,5 +22,6 @@ export const translation = new LocalizedStrings({
     'Something went wrong, please try again later':
       'មានអ្វីខុសសូមព្យាយាមម្តងទៀតនៅពេលក្រោយ',
     Okay: 'យល់ព្រម',
+    Home: 'ទំព័រដើម',
   },
 });
