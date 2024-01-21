@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -6,11 +6,12 @@ import {
   Keyboard,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import auth from '@react-native-firebase/auth';
 
 import {styles} from './styles';
 import {useLanguage} from '../../Hooks';
-import {translation} from '../../Translaction';
-import {PhoneInput, Button, Modal, Alert} from '../../Component';
+import {translation} from '../../Translation';
+import {PhoneInput, Button, Modal, Alert, OTP} from '../../Component';
 import {AuthActions} from '../../Store/Action';
 
 function Login() {
@@ -23,6 +24,7 @@ function Login() {
   const [loginAlert, setLoginAlert] = useState(false);
   const [somethingWentWrongAlert, setSomethingWentWrongAlert] = useState(false);
   const [confirmation, setConfirmation] = useState(null);
+  const [otp, setOtp] = useState(false);
 
   const handlePhoneChange = useCallback(function (value) {
     setPhone(value);
@@ -50,6 +52,12 @@ function Login() {
     });
   }, []);
 
+  const handleOtpToggle = useCallback(function () {
+    setOtp(function (state) {
+      return !state;
+    });
+  }, []);
+
   const handleSignInWithPhoneNumber = useCallback(
     async function () {
       if (phone === '') {
@@ -68,6 +76,7 @@ function Login() {
         );
 
         setConfirmation(confirmation);
+        handleOtpToggle();
       } catch (error) {
         handleSomethingWentWrongAlertToggle();
         console.error(error);
@@ -81,10 +90,43 @@ function Login() {
       handleLoginAlertToggle,
       handleSomethingWentWrongAlertToggle,
       dispatch,
+      handleOtpToggle,
     ],
   );
 
-  console.log(confirmation);
+  const handleVerify = useCallback(
+    async function (value) {
+      handleLoginLoadingToggle();
+      handleOtpToggle();
+      try {
+        await confirmation.confirm(value);
+      } catch (error) {
+        handleSomethingWentWrongAlertToggle();
+      } finally {
+        handleLoginLoadingToggle();
+      }
+    },
+    [
+      confirmation,
+      handleLoginLoadingToggle,
+      handleSomethingWentWrongAlertToggle,
+      handleOtpToggle,
+    ],
+  );
+
+  const handleAuthStateChanged = useCallback(async function (user) {
+    if (user) {
+      await auth().signOut();
+    }
+  }, []);
+
+  useEffect(
+    function () {
+      const subscribed = auth().onAuthStateChanged(handleAuthStateChanged);
+      return subscribed;
+    },
+    [handleAuthStateChanged],
+  );
 
   return (
     <TouchableWithoutFeedback onPress={handleKeyboardDismiss}>
@@ -96,7 +138,7 @@ function Login() {
             placeholder={translation['Please input your phone']}
           />
           <Button
-            title="Login"
+            title={translation.Login}
             style={styles.button}
             onPress={handleSignInWithPhoneNumber}
             loading={loginLoading}
@@ -104,16 +146,17 @@ function Login() {
         </View>
         <Modal visible={loginAlert}>
           <Alert
-            title="Phone number is required"
+            title={translation['Phone number is required']}
             onClose={handleLoginAlertToggle}
           />
         </Modal>
         <Modal visible={somethingWentWrongAlert}>
           <Alert
-            title="Something went wrong, please try again later"
+            title={translation['Something went wrong, please try again later']}
             onClose={handleSomethingWentWrongAlertToggle}
           />
         </Modal>
+        <OTP visible={otp} onVerify={handleVerify} />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );

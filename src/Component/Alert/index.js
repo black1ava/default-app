@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import AutoheightFastImage from '../AutoHeightFastImage';
 import Button from '../Button';
 import {styles} from './styles';
+import {useLanguage} from '../../Hooks';
+import {translation} from '../../Translation';
 
 const propTypes = {
   title: PropTypes.string,
@@ -13,6 +15,9 @@ const propTypes = {
 };
 
 function Alert({title, onClose}) {
+  const language = useLanguage();
+  translation.setLanguage(language);
+
   const renderTitle = useMemo(
     function () {
       return title && <Text style={styles.title}>{title}</Text>;
@@ -27,7 +32,11 @@ function Alert({title, onClose}) {
         width={normalize(48)}
       />
       {renderTitle}
-      <Button style={styles.button} title="Okay" onPress={onClose} />
+      <Button
+        style={styles.button}
+        title={translation.Okay}
+        onPress={onClose}
+      />
     </View>
   );
 }

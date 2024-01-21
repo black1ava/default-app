@@ -25,7 +25,10 @@ function Button({title, onPress, style, loading}) {
   );
 
   return (
-    <TouchableOpacity style={{...styles.container, ...style}} onPress={onPress}>
+    <TouchableOpacity
+      disabled={loading}
+      style={{...styles.container, ...style}}
+      onPress={onPress}>
       {content}
     </TouchableOpacity>
   );

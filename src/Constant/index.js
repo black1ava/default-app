@@ -19,3 +19,7 @@ export class LANGUAGE {
 export class LanguageType {
   static CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
 }
+
+export class AuthType {
+  static STORE_USER = 'STORE_USER';
+}

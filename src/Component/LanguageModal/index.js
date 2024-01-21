@@ -9,7 +9,7 @@ import {LANGUAGE} from '../../Constant';
 import Button from '../Button';
 import {useLanguage} from '../../Hooks';
 import {LanguageActions} from '../../Store/Action';
-import {translation} from '../../Translaction';
+import {translation} from '../../Translation';
 
 const propTypes = {
   onClose: PropTypes.func,
