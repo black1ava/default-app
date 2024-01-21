@@ -30,8 +30,6 @@ function AutoHeightFastImage({source, width}) {
     [source],
   );
 
-  console.log(uri);
-
   return (
     uri && (
       <FastImage

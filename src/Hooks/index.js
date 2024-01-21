@@ -1,3 +1,4 @@
 import useLanguage from './useLanguage';
+import useUser from './useUser';
 
-export {useLanguage};
+export {useLanguage, useUser};

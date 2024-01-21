@@ -9,10 +9,11 @@ import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
 import {styles} from './styles';
-import {useLanguage} from '../../Hooks';
+import {useLanguage, useUser} from '../../Hooks';
 import {translation} from '../../Translation';
 import {PhoneInput, Button, Modal, Alert, OTP} from '../../Component';
 import {AuthActions} from '../../Store/Action';
+import {User} from '../../Modal';
 
 function Login() {
   const language = useLanguage();
@@ -114,11 +115,21 @@ function Login() {
     ],
   );
 
-  const handleAuthStateChanged = useCallback(async function (user) {
-    if (user) {
-      await auth().signOut();
-    }
-  }, []);
+  const handleAuthStateChanged = useCallback(
+    async function (user) {
+      if (user) {
+        const newUser = new User(
+          user.uid,
+          user.displayName,
+          user.email,
+          user.phoneNumber,
+        );
+
+        dispatch(AuthActions.storeUser(newUser));
+      }
+    },
+    [dispatch],
+  );
 
   useEffect(
     function () {

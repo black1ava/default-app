@@ -1,5 +1,7 @@
 import auth from '@react-native-firebase/auth';
 
+import {AuthType} from '../../../Constant';
+
 export function phoneLogin(phone) {
   return async function (dispatch, getState) {
     try {
@@ -8,5 +10,12 @@ export function phoneLogin(phone) {
     } catch (error) {
       throw error;
     }
+  };
+}
+
+export function storeUser(payload) {
+  return {
+    type: AuthType.STORE_USER,
+    payload,
   };
 }
