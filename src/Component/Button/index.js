@@ -10,18 +10,19 @@ const propTypes = {
   onPress: PropTypes.func,
   style: PropTypes.object,
   loading: PropTypes.bool,
+  titleStyle: PropTypes.object,
 };
 
-function Button({title, onPress, style, loading}) {
+function Button({title, onPress, style, loading, titleStyle}) {
   const content = useMemo(
     function () {
       return loading ? (
         <ActivityIndicator color={Color.LIGHT} size="small" />
       ) : (
-        <Text style={styles.title}>{title}</Text>
+        <Text style={{...styles.title, ...titleStyle}}>{title}</Text>
       );
     },
-    [loading, title],
+    [loading, title, titleStyle],
   );
 
   return (

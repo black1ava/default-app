@@ -19,3 +19,9 @@ export function storeUser(payload) {
     payload,
   };
 }
+
+export function clearUser() {
+  return {
+    type: AuthType.CLEAR_USER,
+  };
+}

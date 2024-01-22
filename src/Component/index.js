@@ -7,6 +7,10 @@ import Button from './Button';
 import PhoneInput from './PhoneInput';
 import Alert from './Alert';
 import OTP from './OTP';
+import Drawer from './Drawer';
+import DrawerContent from './DrawerContent';
+import DrawerItem from './DrawerItem';
+import Information from './Information';
 
 export {
   Modal,
@@ -18,4 +22,8 @@ export {
   PhoneInput,
   Alert,
   OTP,
+  Drawer,
+  DrawerContent,
+  DrawerItem,
+  Information,
 };

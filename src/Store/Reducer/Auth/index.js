@@ -12,6 +12,12 @@ export default function reducer(state = initialState, action) {
         user: action.payload,
       };
 
+    case AuthType.CLEAR_USER:
+      return {
+        ...state,
+        user: null,
+      };
+
     default:
       return state;
   }

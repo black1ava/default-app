@@ -3,6 +3,9 @@ export class Screen {
   static HOME = 'HOME';
   static HOME_STACK = 'HOME_STACK';
   static HOME_TAB = 'HOME_TAB';
+  static PROFILE_STACK = 'PROFILE_STACK';
+  static PROFILE_TAB = 'PROFILE_TAB';
+  static APP = 'APP';
 }
 
 export class Color {
@@ -25,4 +28,5 @@ export class LanguageType {
 
 export class AuthType {
   static STORE_USER = 'STORE_USER';
+  static CLEAR_USER = 'CLEAR_USER';
 }

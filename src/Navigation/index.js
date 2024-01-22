@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
 import AuthNavigation from './AuthNavigation';
-import StackNavigation from './StackNavigation';
+import DrawerNavigation from './DrawerNavigation';
 import {useUser} from '../Hooks';
 
 function Navigation() {
@@ -10,7 +10,7 @@ function Navigation() {
 
   const navigation = useMemo(
     function () {
-      return user ? <StackNavigation /> : <AuthNavigation />;
+      return user ? <DrawerNavigation /> : <AuthNavigation />;
     },
     [user],
   );

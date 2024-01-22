@@ -2,11 +2,12 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {HomeScreen} from '../../Screen';
+import {HomeScreen, ProfileScreen} from '../../Screen';
 import {Color, Screen} from '../../Constant';
 import {styles} from './styles';
-import {LanguageHeader} from '../../Component';
+import {LanguageHeader, Drawer} from '../../Component';
 import {useLanguage} from '../../Hooks';
 import {translation} from '../../Translation';
 
@@ -32,7 +33,27 @@ function HomeStack() {
       <Stack.Screen
         name={Screen.HOME_STACK}
         component={HomeScreen}
-        options={{title: translation.Home}}
+        options={{
+          title: translation.Home,
+          headerLeft: function () {
+            return <Drawer />;
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileStack() {
+  const language = useLanguage();
+  translation.setLanguage(language);
+
+  return (
+    <Stack.Navigator screenOptions={defaultOption}>
+      <Stack.Screen
+        name={Screen.PROFILE_STACK}
+        component={ProfileScreen}
+        options={{title: translation.Profile}}
       />
     </Stack.Navigator>
   );
@@ -56,6 +77,16 @@ function TabNavigation() {
           tabBarLabel: translation.Home,
           tabBarIcon: function ({color, size}) {
             return <AntDesign name="home" color={color} size={size} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name={Screen.PROFILE_TAB}
+        component={ProfileStack}
+        options={{
+          tabBarLabel: translation.Profile,
+          tabBarIcon: function ({color, size}) {
+            return <Ionicons name="person-outline" color={color} size={size} />;
           },
         }}
       />

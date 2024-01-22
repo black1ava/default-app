@@ -12,6 +12,10 @@ export const translation = new LocalizedStrings({
       'Something went wrong, please try again later',
     Okay: 'Okay',
     Home: 'Home',
+    Profile: 'Profile',
+    Cancel: 'Cancel',
+    Logout: 'Logout',
+    'Are you sure you want to logout?': 'Are you sure you want to logout?',
   },
   [LANGUAGE.KH]: {
     Login: 'ចូល',
@@ -23,5 +27,9 @@ export const translation = new LocalizedStrings({
       'មានអ្វីខុសសូមព្យាយាមម្តងទៀតនៅពេលក្រោយ',
     Okay: 'យល់ព្រម',
     Home: 'ទំព័រដើម',
+    Profile: 'គណនី',
+    Cancel: 'បោះបង់',
+    Logout: 'ចាកចេញ',
+    'Are you sure you want to logout?': 'តើអ្នកពិតជាចង់ចាកចេញ?',
   },
 });
