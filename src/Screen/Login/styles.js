@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import normalize from 'react-native-normalize';
+import {Font} from '../../Constant';
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,5 +15,9 @@ export const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
+  },
+  or: {
+    fontFamily: `${Font.NAME}-Regular`,
+    fontSize: normalize(18),
   },
 });

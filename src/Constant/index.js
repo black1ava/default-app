@@ -30,3 +30,8 @@ export class AuthType {
   static STORE_USER = 'STORE_USER';
   static CLEAR_USER = 'CLEAR_USER';
 }
+
+export class Google {
+  static WEB_CLIENT_ID =
+    '933626481774-jffvesb2snnqt4b75ntualt48al1j2ij.apps.googleusercontent.com';
+}

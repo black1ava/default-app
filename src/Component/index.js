@@ -11,6 +11,7 @@ import Drawer from './Drawer';
 import DrawerContent from './DrawerContent';
 import DrawerItem from './DrawerItem';
 import Information from './Information';
+import SocialMediaLogin from './SocialMediaLogin';
 
 export {
   Modal,
@@ -26,4 +27,5 @@ export {
   DrawerContent,
   DrawerItem,
   Information,
+  SocialMediaLogin,
 };

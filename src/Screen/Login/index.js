@@ -4,16 +4,28 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Text,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {styles} from './styles';
-import {useLanguage, useUser} from '../../Hooks';
+import {useLanguage} from '../../Hooks';
 import {translation} from '../../Translation';
-import {PhoneInput, Button, Modal, Alert, OTP} from '../../Component';
+import {
+  PhoneInput,
+  Button,
+  Modal,
+  Alert,
+  OTP,
+  SocialMediaLogin,
+  AutoHeightFastImage,
+} from '../../Component';
 import {AuthActions} from '../../Store/Action';
 import {User} from '../../Modal';
+import normalize from 'react-native-normalize';
+import {Google} from '../../Constant';
 
 function Login() {
   const language = useLanguage();
@@ -26,6 +38,11 @@ function Login() {
   const [somethingWentWrongAlert, setSomethingWentWrongAlert] = useState(false);
   const [confirmation, setConfirmation] = useState(null);
   const [otp, setOtp] = useState(false);
+  const [googleLoadingShow, setGoogleLoadingShow] = useState(false);
+
+  GoogleSignin.configure({
+    webClientId: Google.WEB_CLIENT_ID,
+  });
 
   const handlePhoneChange = useCallback(function (value) {
     setPhone(value);
@@ -131,6 +148,33 @@ function Login() {
     [dispatch],
   );
 
+  const handleGoogleLoadingShowToggle = useCallback(function () {
+    setGoogleLoadingShow(function (state) {
+      return !state;
+    });
+  }, []);
+
+  const handleSignInWithGoogle = useCallback(
+    async function () {
+      handleGoogleLoadingShowToggle();
+
+      try {
+        await GoogleSignin.hasPlayServices({
+          showPlayServicesUpdateDialog: true,
+        });
+        const {idToken} = await GoogleSignin.signIn();
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        await auth().signInWithCredential(googleCredential);
+      } catch (error) {
+        console.error('error', error);
+        handleSomethingWentWrongAlertToggle();
+      } finally {
+        handleGoogleLoadingShowToggle();
+      }
+    },
+    [handleGoogleLoadingShowToggle, handleSomethingWentWrongAlertToggle],
+  );
+
   useEffect(
     function () {
       const subscribed = auth().onAuthStateChanged(handleAuthStateChanged);
@@ -153,6 +197,19 @@ function Login() {
             style={styles.button}
             onPress={handleSignInWithPhoneNumber}
             loading={loginLoading}
+          />
+          <Text style={styles.or}>OR</Text>
+          <SocialMediaLogin
+            style={styles.button}
+            title="Continue with Google"
+            icon={
+              <AutoHeightFastImage
+                source={require('../../assets/google.png')}
+                width={normalize(24)}
+              />
+            }
+            loading={googleLoadingShow}
+            onPress={handleSignInWithGoogle}
           />
         </View>
         <Modal visible={loginAlert}>
